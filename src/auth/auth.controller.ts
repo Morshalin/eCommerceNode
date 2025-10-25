@@ -1,14 +1,15 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { signUpAuthDto } from './dto/sign-up-auth.dto';
-import { signInAuthDto } from './dto/sign-in-auth.dto';
+import { SignUpAuthDto } from './dto/sign-up-auth.dto';
+import { SignInAuthDto } from './dto/sign-in-auth.dto';
+import { API_VERSION } from 'src/_cores/constants/app.constant';
 
-@Controller('v1/api/auth')
+@Controller(`${API_VERSION}/auth`)
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('sign-up')
-  async signUp(@Body() signUpAuthDto: signUpAuthDto) {
+  async signUp(@Body() signUpAuthDto: SignUpAuthDto) {
     const accessToken = await this.authService.signUp(signUpAuthDto);
 
     return {
@@ -17,7 +18,8 @@ export class AuthController {
     };
   }
   @Post('sign-in')
-  async signIn(@Body() signInAuthDto: signInAuthDto) {
+  @HttpCode(200)
+  async signIn(@Body() signInAuthDto: SignInAuthDto) {
     const accessToken = await this.authService.signIn(signInAuthDto);
 
     return {

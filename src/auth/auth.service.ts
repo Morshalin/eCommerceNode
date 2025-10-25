@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { signUpAuthDto } from './dto/sign-up-auth.dto';
-import { signInAuthDto } from './dto/sign-in-auth.dto';
+import { SignUpAuthDto } from './dto/sign-up-auth.dto';
+import { SignInAuthDto } from './dto/sign-in-auth.dto';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
-import { generateToken } from 'src/utils/token.utils';
+import { generateToken } from 'src/_utils/token.utils';
 
 @Injectable()
 export class AuthService {
@@ -13,15 +13,14 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signUp(signUpAuthDto: signUpAuthDto) {
+  async signUp(signUpAuthDto: SignUpAuthDto) {
     const user = await this.userService.create(signUpAuthDto);
 
     return generateToken(user, this.jwtService);
   }
 
-  async signIn(signInAuthDto: signInAuthDto) {
+  async signIn(signInAuthDto: SignInAuthDto) {
     const user = await this.userService.findByEmail(signInAuthDto.email);
-    console.log(user);
 
     if (!user) {
       throw new BadRequestException('User not for this email');

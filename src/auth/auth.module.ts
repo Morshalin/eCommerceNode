@@ -7,10 +7,14 @@ import { UserModule } from 'src/user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
+import { RoleModule } from 'src/role/role.module';
+import { CategoryModule } from 'src/category/category.module';
 
 @Module({
   imports: [
     UserModule,
+    RoleModule,
+    CategoryModule,
     TypeOrmModule.forFeature([User]),
     JwtModule.registerAsync({
       imports: [ConfigModule],

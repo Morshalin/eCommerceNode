@@ -11,12 +11,13 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { AuthGuard } from 'src/cores/guards/auth.gurd';
+import { AuthGuard } from 'src/_cores/guards/auth.gurd';
 import { User } from './entities/user.entity';
-import { CurrentUser } from 'src/cores/decorators/current-user.decorator';
+import { CurrentUser } from 'src/_cores/decorators/current-user.decorator';
 import { UserPayload } from './interfaces/user-payload.interface';
+import { API_VERSION } from 'src/_cores/constants/app.constant';
 
-@Controller('v1/api/user')
+@Controller(`${API_VERSION}/user`)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

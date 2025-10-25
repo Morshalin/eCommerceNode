@@ -6,6 +6,16 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { User } from './user/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
+import { RoleModule } from './role/role.module';
+import { Role } from './role/entities/role.entity';
+import { EndpointModule } from './endpoint/endpoint.module';
+import { Endpoint } from './endpoint/entities/endpoint.entity';
+import { PermissionsModule } from './permissions/permissions.module';
+import { Permission } from './permissions/entities/permission.entity';
+import { CategoryModule } from './category/category.module';
+import { Category } from './category/entities/category.entity';
+import { ProductModule } from './product/product.module';
+import { Product } from './product/entities/product.entity';
 
 @Module({
   imports: [
@@ -19,13 +29,19 @@ import { AuthModule } from './auth/auth.module';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
-        entities: [User],
+        entities: [User, Role, Endpoint, Permission, Category, Product],
         synchronize: true,
+        //logging: true,
       }),
       inject: [ConfigService],
     }),
     UserModule,
     AuthModule,
+    RoleModule,
+    EndpointModule,
+    PermissionsModule,
+    CategoryModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],
